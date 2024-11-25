@@ -66,29 +66,8 @@ def generate_name(model, mappings, gender, start_str='', max_length=20, temperat
             # Convert start_str to lowercase to ensure compatibility
             start_str = start_str.lower()
             
-        char_to_int = mappings['char_to_int']
-        int_to_char = {int(k): v for k, v in mappings['int_to_char'].items()}
-        
-        chars = [char_to_int[c] for c in start_str]
-        input_seq = torch.tensor(chars).unsqueeze(0)
-        gender_tensor = torch.tensor([gender])
-        
-        output_name = start_str
-        for _ in range(max_length - len(start_str)):
-            output = model(input_seq, gender_tensor)
-            # Apply temperature to logits
-            logits = output[0, -1] / temperature
-            probabilities = torch.softmax(logits, dim=0)
-            next_char_idx = torch.multinomial(probabilities, 1).item()
-            next_char = int_to_char[next_char_idx]
-            
-            if next_char == ' ':
-                break
-                
-            output_name += next_char
-            input_seq = torch.cat([input_seq, torch.tensor([[next_char_idx]])], dim=1)
-            
-        return output_name.capitalize()
+        name = sample(model, dataset, gender=gender, start_str=start_str)
+        return name.capitalize()
 # Streamlit interface
 st.title("Lietuviškų vardų generatorius 🎲")
 
