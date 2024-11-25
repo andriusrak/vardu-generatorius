@@ -117,4 +117,4 @@ Gali generuoti tiek vyriškus, tiek moteriškus vardus.
 1. Pasirinkite lytį (vyrišką / moterišką)
 2. Pasirinktinai įveskite pradinę raidę
 3. Spustelėkite „Generuoti vardą“.
-„„“)
+""")
