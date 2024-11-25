@@ -2,6 +2,7 @@ import streamlit as st
 import torch
 import torch.nn as nn
 import json
+import random
 
 # Model class definition (must match your training model)
 class GenderAwareTransformer(nn.Module):
