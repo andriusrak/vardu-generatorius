@@ -86,7 +86,7 @@ def generate_name(model, mappings, gender, start_str='', max_length=20, temperat
             
         return output_name
 # Streamlit interface
-st.title("Naujų Lietuviškų vardų generatorius 🎲")
+st.title("Lietuviškų vardų generatorius 🎲")
 
 # Load model
 model, mappings = load_model()
