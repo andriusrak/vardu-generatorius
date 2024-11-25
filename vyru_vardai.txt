@@ -1,4 +1,4 @@
-male_name
+name
 Ãbas
 Ãbdijus
 Abdònas

@@ -1,4 +1,4 @@
-female_name
+name
 Ãbė
 Abigáilė
 Ãbija
