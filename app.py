@@ -53,19 +53,26 @@ temperature = st.slider(
     help="Dėl mažesnių verčių vardai gaunami konservatyvesni, o dėl didesnių - kūrybiškesni."
 )
 
-def sample(model, dataset, gender, start_str='a', max_length=20):
+def sample(model, mappings, gender, start_str='a', max_length=20, temperature=1.0):
     model.eval()
     with torch.no_grad():
-        chars = [dataset.char_to_int[c] for c in start_str]
+        char_to_int = mappings['char_to_int']
+        int_to_char = {int(k): v for k, v in mappings['int_to_char'].items()}
+
+        # Convert the start string to indices
+        chars = [char_to_int[c] for c in start_str]
         input_seq = torch.tensor(chars).unsqueeze(0)
         gender_tensor = torch.tensor([gender])  # 0 for male, 1 for female
 
         output_name = start_str
         for _ in range(max_length - len(start_str)):
             output = model(input_seq, gender_tensor)
-            probabilities = torch.softmax(output[0, -1], dim=0)
+            
+            # Apply temperature to logits
+            logits = output[0, -1] / temperature
+            probabilities = torch.softmax(logits, dim=0)
             next_char_idx = torch.multinomial(probabilities, 1).item()
-            next_char = dataset.int_to_char[next_char_idx]
+            next_char = int_to_char[next_char_idx]
 
             if next_char == ' ':
                 break
@@ -89,7 +96,7 @@ def generate_name(model, mappings, gender, start_str='', max_length=20, temperat
             # Convert start_str to lowercase to ensure compatibility
             start_str = start_str.lower()
             
-        name = sample(model, dataset, gender=gender, start_str=start_str, temperature=temperature)
+        name = sample(model, mappings, gender=gender, start_str=start_str, max_length=max_length, temperature=temperature)
         return name
         
 # Streamlit interface
