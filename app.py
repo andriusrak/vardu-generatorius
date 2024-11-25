@@ -84,7 +84,7 @@ def generate_name(model, mappings, gender, start_str='', max_length=20, temperat
             output_name += next_char
             input_seq = torch.cat([input_seq, torch.tensor([[next_char_idx]])], dim=1)
             
-        return output_name
+        return output_name.capitalize()
 # Streamlit interface
 st.title("Lietuviškų vardų generatorius 🎲")
 
