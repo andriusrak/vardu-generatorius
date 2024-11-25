@@ -102,7 +102,7 @@ with col2:
 
 # Generate button
 if st.button("Generuoti vardą", type="primary"):
-    gender_val = 0 if gender == "Male" else 1
+    gender_val = 0 if gender == "Vyriškas" else 1
     generated_name = generate_name(model, mappings, gender_val, start_letter, temperature=temperature)
     st.success(f"Sugeneruotas vardas: {generated_name}")
 
