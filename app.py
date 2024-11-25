@@ -57,8 +57,11 @@ temperature = st.slider(
 def generate_name(model, mappings, gender, start_str='', max_length=20, temperature=1.0):
     with torch.no_grad():
         if not start_str:
-            # Pick a random letter from the character-to-integer mapping
-            start_str = random.choice(list(mappings['char_to_int'].keys()))
+            allowed_indices = list(range(1, 22)) + [24, 25, 38, 39, 43, 45, 46]
+            # Map allowed indices to characters
+            valid_chars = [mappings['int_to_char'][str(idx)] for idx in allowed_indices]
+
+            start_str = random.choice(valid_chars)
         else:
             # Convert start_str to lowercase to ensure compatibility
             start_str = start_str.lower()
