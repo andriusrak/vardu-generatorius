@@ -44,19 +44,23 @@ def load_model():
 
 # Add this with your other UI elements
 temperature = st.slider(
-    "Temperature (Higher = more creative names)",
+    "Temperatūra (Didesnis = kūrybiškesni vardai)",
     min_value=0.1,
     max_value=2.0,
     value=1.0,
     step=0.1,
-    help="Lower values make names more conservative, higher values make them more creative"
+    help="Dėl mažesnių verčių vardai gaunami konservatyvesni, o dėl didesnių - kūrybiškesni."
 )
 
 # Modify the generate_name function to use temperature
 def generate_name(model, mappings, gender, start_str='', max_length=20, temperature=1.0):
     with torch.no_grad():
         if not start_str:
-            start_str = 'A'
+            # Pick a random letter from the character-to-integer mapping
+            start_str = random.choice(list(mappings['char_to_int'].keys()))
+        else:
+            # Convert start_str to lowercase to ensure compatibility
+            start_str = start_str.lower()
             
         char_to_int = mappings['char_to_int']
         int_to_char = {int(k): v for k, v in mappings['int_to_char'].items()}
@@ -82,7 +86,7 @@ def generate_name(model, mappings, gender, start_str='', max_length=20, temperat
             
         return output_name
 # Streamlit interface
-st.title("Lithuanian Name Generator 🎯")
+st.title("Naujų Lietuviškų vardų generatorius 🎲")
 
 # Load model
 model, mappings = load_model()
@@ -91,26 +95,26 @@ model, mappings = load_model()
 col1, col2 = st.columns(2)
 
 with col1:
-    gender = st.radio("Select gender:", ["Male", "Female"])
+    gender = st.radio("Vardo lytis:", ["Vyriškas", "Moteriškas"])
     
 with col2:
-    start_letter = st.text_input("Start with letter (optional):", "")
+    start_letter = st.text_input("Pradinė raidė (neprivaloma):", "")
 
 # Generate button
-if st.button("Generate Name", type="primary"):
+if st.button("Generuoti vardą", type="primary"):
     gender_val = 0 if gender == "Male" else 1
     generated_name = generate_name(model, mappings, gender_val, start_letter, temperature=temperature)
-    st.success(f"Generated name: {generated_name}")
+    st.success(f"Sugeneruotas vardas: {generated_name}")
 
 # Add some information
 st.markdown("""
 ---
-### About
-This app generates Lithuanian names using AI. The model was trained on real Lithuanian names
-and can generate both male and female names.
+### Apie
+Ši programėlė generuoja lietuviškus vardus naudodama dirbtinį intelektą. Modelis buvo apmokytas naudojant tikrus lietuviškus vardus.
+Gali generuoti tiek vyriškus, tiek moteriškus vardus.
 
-#### How to use:
-1. Select gender (Male/Female)
-2. Optionally enter a starting letter
-3. Click 'Generate Name'
-""")
+#### Kaip naudotis:
+1. Pasirinkite lytį (vyrišką / moterišką)
+2. Pasirinktinai įveskite pradinę raidę
+3. Spustelėkite „Generuoti vardą“.
+„„“)
