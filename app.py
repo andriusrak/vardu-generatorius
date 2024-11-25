@@ -44,7 +44,7 @@ def load_model():
 
 # Add this with your other UI elements
 temperature = st.slider(
-    "Temperatūra (Didesnis = kūrybiškesni vardai)",
+    "Temperatūra (Aukštesnė = kūrybiškesni vardai)",
     min_value=0.1,
     max_value=2.0,
     value=1.0,
