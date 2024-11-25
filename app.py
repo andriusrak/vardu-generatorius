@@ -124,7 +124,7 @@ if st.button("Generuoti vardą", type="primary"):
 st.markdown("""
 ---
 ### Apie
-Ši programėlė generuoja lietuviškus vardus naudodama dirbtinį intelektą. Modelis buvo apmokytas naudojant tikrus lietuviškus vardus.
+Ši programėlė generuoja naujus lietuviškus vardus naudodama dirbtinį intelektą. Modelis buvo apmokytas naudojant tikrus lietuviškus vardus.
 Gali generuoti tiek vyriškus, tiek moteriškus vardus.
 
 #### Kaip naudotis:
