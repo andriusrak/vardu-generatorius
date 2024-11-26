@@ -1,3 +1,3 @@
 https://vardu-generatorius.streamlit.app/
 
-Streamlit aplikacijos kodas streamlit branche
+Modelis, mapping ir streamlit aplikacijos kodas streamlit branche. 
